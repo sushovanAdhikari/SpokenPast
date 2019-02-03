@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Donde.Augmentor.Core.Domain\Donde.SpokenPast.Core.Domain.csproj" />
-    <ProjectReference Include="..\Donde.Augmentor.Infrastructure\Donde.SpokenPast.Infrastructure.csproj" />
+    <ProjectReference Include="..\Donde.SpokenPast.Core.Domain\Donde.SpokenPast.Core.Domain.csproj" />
+    <ProjectReference Include="..\Donde.SpokenPast.Infrastructure\Donde.SpokenPast.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
