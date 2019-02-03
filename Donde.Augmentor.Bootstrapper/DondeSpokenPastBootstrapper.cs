@@ -1,0 +1,41 @@
+﻿using AutoMapper;
+using SimpleInjector;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+namespace Donde.SpokenPast.Bootstrapper
+{
+    public class DondeSpokenPastBootstrapper : BaseBootstrapper
+    {
+        public static void BootstrapDondeSpokenPast(Container simpleInjectorContainer, Assembly webAssembly, string connectionString, string environmentName)
+        {
+            BootstrapAutoMapper(simpleInjectorContainer, webAssembly);
+            CoreServiceBootstrapper.BootstrapCoreService(simpleInjectorContainer);
+            InfrastructureBootstrapper.BootstrapInfrastructure(simpleInjectorContainer);
+        }
+
+        private static void BootstrapAutoMapper(Container simpleInjectorContainer, Assembly webAssembly)
+        {
+            var assembliesToBootstrapFrom = new List<Assembly>
+            {
+                webAssembly,
+                Assembly.Load("Donde.SpokenPast.Core.Services")
+        };
+
+            var profiles = assembliesToBootstrapFrom.SelectMany(x => x.GetTypes())
+                                                    .Where(x => typeof(AutoMapper.Profile).IsAssignableFrom(x));
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                foreach (var profile in profiles)
+                {
+                    cfg.AddProfile(Activator.CreateInstance(profile) as AutoMapper.Profile);
+                }
+            });
+
+            simpleInjectorContainer.Register(() => config.CreateMapper(simpleInjectorContainer.GetInstance), Lifestyle.Scoped);
+        }
+    }
+}
