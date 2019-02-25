@@ -22,7 +22,7 @@ namespace Donde.SpokenPast.Bootstrapper
                  new List<string>
                  {
                     "Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces",
-                    "Donde.SpokenPast.Core.Services.Services"
+                    "Donde.SpokenPast.Core.Services.Services",
                  }
             );
         }
