@@ -4,7 +4,9 @@ using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,12 @@ namespace Donde.SpokenPast.Web
             services.AddOptions();
 
             IntegrateSimpleInjector(services);
+            services.AddApiVersioning(o => {
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(2, 0);
+                o.ApiVersionReader = new UrlSegmentApiVersionReader();
+            });
 
             services.AddDondeOData(Configuration);
         }
