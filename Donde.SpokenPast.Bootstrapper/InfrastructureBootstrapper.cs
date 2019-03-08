@@ -11,7 +11,8 @@ namespace Donde.SpokenPast.Bootstrapper
 {
     public class InfrastructureBootstrapper : BaseBootstrapper
     {
-        public static void BootstrapInfrastructure(Container simpleInjectorContainer)
+        public static void BootstrapInfrastructure(Container simpleInjectorContainer, string connectionString,
+            string environmentName, ILoggerFactory loggerFactory)
         {
             RegisterInstancesByNamespace(simpleInjectorContainer,
                 new List<Assembly>
@@ -23,8 +24,13 @@ namespace Donde.SpokenPast.Bootstrapper
                  {
                     "Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces",
                     "Donde.SpokenPast.Core.Services.Services",
+                    "Donde.SpokenPast.Core.Repositories.Interfaces.RepositoryInterfaces",
+                    "Donde.SpokenPast.Infrastructure.Repositories"
                  }
             );
+
+            var options = BuildDondeContextOptions(environmentName, connectionString, loggerFactory);
+            simpleInjectorContainer.Register(() => { return new DondeContext(options.Options); }, Lifestyle.Scoped);
         }
 
         private static DbContextOptionsBuilder<DondeContext> BuildDondeContextOptions(string environmentName, string connectionString, ILoggerFactory loggerFactory)
