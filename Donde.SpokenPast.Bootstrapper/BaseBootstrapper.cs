@@ -18,7 +18,8 @@ namespace Donde.SpokenPast.Bootstrapper
            from type in assemblies.SelectMany(a => a.GetExportedTypes())
            where namespaces.Contains(type.Namespace)
            where type.GetInterfaces().Any()
-           select new { Service = type.GetInterfaces().Single(), Implementation = type };
+           //select new { Service = type.GetInterfaces().Single(), Implementation = type };
+           select new { Service = type.GetInterfaces().SingleOrDefault(x => x.Name.Contains(type.Name)), Implementation = type };
 
             foreach (var reg in registrations)
             {

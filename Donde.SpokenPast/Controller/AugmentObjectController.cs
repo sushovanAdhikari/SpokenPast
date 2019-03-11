@@ -15,7 +15,7 @@ namespace Donde.SpokenPast.Web.Controller
     {
         private readonly IAugmentObjectService _augmentObjectService;
         private readonly IMapper _mapper;
-        
+
         public AugmentObjectController(IAugmentObjectService augmentObjectService, IMapper mapper)
         {
             _augmentObjectService = augmentObjectService;
