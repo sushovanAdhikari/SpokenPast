@@ -18,13 +18,13 @@ namespace Donde.SpokenPast.Bootstrapper
                 new List<string>
                 {
                     "Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces",
-                    "Donde.SpokenPast.Core.Services.Services"
+                    "Donde.SpokenPast.Core.Services.Services",
                 });
 
             //any fluent validators can be registered here.
         }
 
-        protected static Func<Assembly> GetServiceInterfaceAssembly { get; } = () => Assembly.Load("Donde.SpokenPast.Core.Services.Interfaces");
+        protected static Func<Assembly> GetServiceInterfaceAssembly { get; } = () => Assembly.Load("Donde.SpokenPast.Core.Service.Interfaces");
         protected static Func<Assembly> GetServiceAssembly { get; } = () => Assembly.Load("Donde.SpokenPast.Core.Services");
     }
 }
