@@ -2,6 +2,7 @@
 using Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces;
 using Donde.SpokenPast.Web.ViewModels;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -22,9 +23,12 @@ namespace Donde.SpokenPast.Web.Controller
             _mapper = mapper;
         }
 
-        [HttpGet]
+
+        [HttpGet()]
         [ODataRoute]
-        public async Task<IActionResult> GetAugmentObject([FromODataUri] double latitude, [FromODataUri] double longitude, [FromODataUri] int radiusInMeters)
+        public async Task<IActionResult> GetAugmentObject(ODataQueryOptions<AugmentObjectViewModel> options, double latitude,
+            double longitude,
+            int radiusInMeters)
         {
             var result = await _augmentObjectService.GetClosestAugmentObjectsByRadius(latitude, longitude, radiusInMeters);
 
@@ -32,5 +36,6 @@ namespace Donde.SpokenPast.Web.Controller
 
             return Ok(mappedResult);
         }
+
     }
 }
