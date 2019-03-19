@@ -23,7 +23,8 @@ namespace Donde.Augmentor.Web.Controller
             _mapper = mapper;
         }
 
-        [HttpGet]
+
+        [HttpGet()]
         [ODataRoute]
         public async Task<IActionResult> GetAugmentObject
             (ODataQueryOptions<AugmentObjectViewModel> options, double latitude,
@@ -36,5 +37,6 @@ namespace Donde.Augmentor.Web.Controller
 
             return Ok(result);
         }
+
     }
 }
