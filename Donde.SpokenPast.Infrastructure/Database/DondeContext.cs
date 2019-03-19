@@ -1,5 +1,6 @@
 ﻿using Donde.SpokenPast.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Donde.SpokenPast.Infrastructure.Database
 {
@@ -16,6 +17,11 @@ namespace Donde.SpokenPast.Infrastructure.Database
         }
         public DbSet<User> Users { get; set; }   
         public DbSet<AugmentObject> AugmentObjects { get; set; }
+
+        public void Seed(DbContext context)
+        {
+            var User = new User() {Name="Homer Simpson", Email="Email@email.com", Password="Secur3pw#1", Phone="8675309" };
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,5 +49,6 @@ namespace Donde.SpokenPast.Infrastructure.Database
         {
             if (!optionsBuilder.IsConfigured) optionsBuilder.UseNpgsql(@"Server=localhost;Port=5432;Database=Donde_SpokenPast;Username=postgres;Password=postgres");
         }
+
     }
 }
