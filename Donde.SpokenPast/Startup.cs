@@ -26,7 +26,7 @@ namespace Donde.SpokenPast.Web
     {
         public Startup(IHostingEnvironment env, IConfiguration config)
         {
-            Configuration = config as IConfigurationRoot;
+            Configuration = config as IConfigurationRoot;        
             CurrentEnvironment = env;
         }
 
@@ -90,11 +90,11 @@ namespace Donde.SpokenPast.Web
         {
             var connectionString = Configuration["Donde.SpokenPast.Data:API:ConnectionString"];
             DondeSpokenPastBootstrapper.BootstrapDondeSpokenPast
-                (container,
+                (container, 
                 Assembly.GetExecutingAssembly(),
-                connectionString,
+                connectionString, 
                 CurrentEnvironment.EnvironmentName, loggerFactory);
-
+          
             // Allow Simple Injector to resolve services from ASP.NET Core.
             container.AutoCrossWireAspNetComponents(app);
 

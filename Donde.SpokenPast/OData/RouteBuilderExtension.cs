@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.OData.Edm;
 using System.Linq;
 
 namespace Donde.SpokenPast.Web.OData
@@ -16,7 +15,6 @@ namespace Donde.SpokenPast.Web.OData
             modelBuilder.ModelBuilderFactory = () => new ODataConventionModelBuilder().EnableLowerCamelCase();
         
             builder.Select().Filter().OrderBy().MaxTop(ODataConstants.MaximumTopAllowed).Count();
-
             builder.MapVersionedODataRoutes("odata", "api/v{apiVersion}", modelBuilder.GetEdmModels());
 
             return builder;

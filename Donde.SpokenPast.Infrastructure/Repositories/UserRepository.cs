@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Dapper;
 using Donde.Augmentor.Infrastructure.Repositories;
 using Donde.SpokenPast.Core.Domain.Dto;
 using Donde.SpokenPast.Core.Domain.Models;
@@ -28,7 +27,7 @@ namespace Donde.SpokenPast.Infrastructure.Repositories
         {
             return await UpdateAsync(id, entity);
         }
-
+        
         public async Task<IEnumerable<UserDto>> GetUsers()
         {
             string usersQuery = $@"SELECT ""Id"", ""Name"", ""Email"", ""Password"", ""Phone"", ""Username"", ""OrganizationId"", 
@@ -44,7 +43,7 @@ namespace Donde.SpokenPast.Infrastructure.Repositories
 
             return result;
         }
-
+        
 
         public async Task<IEnumerable<IAsyncResult>> CreateUserAsync(User entity)
         {
