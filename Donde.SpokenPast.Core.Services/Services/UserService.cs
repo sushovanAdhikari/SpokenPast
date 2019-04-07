@@ -1,10 +1,12 @@
 ﻿using Donde.SpokenPast.Core.Domain.Dto;
+using Donde.SpokenPast.Core.Domain.Helpers;
 using Donde.SpokenPast.Core.Domain.Models;
 using Donde.SpokenPast.Core.Repositories.Interfaces.RepositoryInterfaces;
 using Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces;
 using Donde.SpokenPast.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,27 +23,26 @@ namespace Donde.SpokenPast.Core.Services.Services
 
         public Task<User> CreateUserAsync(User entity)
         {
+            entity.Id = SequentialGuidGenerator.GenerateComb();
+            entity.AddedDate = DateTime.UtcNow;
+            entity.UpdatedDate = DateTime.UtcNow;
+            // validate the user entity. Use fluent validaiton with asp.net core.
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UserDto>> GetUserById(Guid id)
+        public Task<User> GetUserByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<UserDto>> GetUsersAsync()
+        public IQueryable<User> GetUsers()
         {
-            return await _userRepository.GetUsers();
+            return _userRepository.GetUsers();
         }
 
         public Task<User> UpdateUserAsync(Guid id, User entity)
         {
             throw new NotImplementedException();
-        }
-
-        async Task<IEnumerable<UserDto>> IUserService.GetUserById(Guid id)
-        {
-            return await _userRepository.GetUserByIdAsync(id);
         }
     }
 }

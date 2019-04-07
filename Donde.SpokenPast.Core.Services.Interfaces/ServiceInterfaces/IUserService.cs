@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Donde.SpokenPast.Core.Domain.Dto;
@@ -10,9 +11,9 @@ namespace Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserDto>> GetUsersAsync();
-        Task<IEnumerable<UserDto>> GetUserById(Guid id);
+        IQueryable<User> GetUsers();
         Task<User> CreateUserAsync(User entity);
         Task<User> UpdateUserAsync(Guid id, User entity);
+        Task<User> GetUserByIdAsync(Guid id);
     }
 }

@@ -3,6 +3,7 @@ using Donde.SpokenPast.Core.Domain.Models;
 using Donde.SpokenPast.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,9 +11,9 @@ namespace Donde.SpokenPast.Core.Repositories.Interfaces.RepositoryInterfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<UserDto>> GetUsers();
-        Task<IEnumerable<IAsyncResult>> CreateUserAsync(User entity);
+        IQueryable<User> GetUsers();
+        Task<User> CreateUserAsync(User entity);
         Task<User> UpdateUserAsync(Guid id, User entity);
-        Task<IEnumerable<UserDto>> GetUserByIdAsync(Guid id);
+        Task<User> GetUserByIdAsync(Guid id);
     }
 }
