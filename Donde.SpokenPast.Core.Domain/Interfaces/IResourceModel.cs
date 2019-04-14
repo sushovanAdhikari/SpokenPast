@@ -6,6 +6,6 @@ namespace Donde.SpokenPast.Core.Domain.Interfaces
     {
         string Name { get; set; }
         string Url { get; set; }
-      //  Guid OrganizationId { get; set; }
+        //  Guid OrganizationId { get; set; }
     }
 }

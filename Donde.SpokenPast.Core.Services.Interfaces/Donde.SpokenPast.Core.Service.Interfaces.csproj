@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ServiceInterfaces\IUsers.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Donde.SpokenPast.Core.Domain\Donde.SpokenPast.Core.Domain.csproj" />
   </ItemGroup>
 

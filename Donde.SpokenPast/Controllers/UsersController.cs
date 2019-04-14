@@ -22,7 +22,7 @@ namespace Donde.SpokenPast.Web.Controllers
         private readonly DondeContext _context;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        //private readonly object odataOptions;
+        private readonly object odataOptions;
 
         public UsersController(DondeContext context, IUserService userService, IMapper mapper)
         {
@@ -71,15 +71,15 @@ namespace Donde.SpokenPast.Web.Controllers
         public async Task<IActionResult> Post([FromBody]UserViewModel user)
         {
             var userModel = _mapper.Map<User>(user);
-            return Ok( await _userService.CreateUserAsync(userModel));
+            return Ok(await _userService.CreateUserAsync(userModel));
         }
 
         [HttpPost]
         [ODataRoute]
         public async Task<IActionResult> Put([FromBody]UserViewModel user)
         {
-           // on put, take same viewmodel, use same mapper,
-           // and on the service layer, change the updated date.
+            // on put, take same viewmodel, use same mapper,
+            // and on the service layer, change the updated date.
             var userModel = _mapper.Map<User>(user);
             return Ok(await _userService.CreateUserAsync(userModel));
         }

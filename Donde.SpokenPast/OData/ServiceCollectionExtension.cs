@@ -13,7 +13,7 @@ namespace Donde.SpokenPast.Web.OData
     public static class ServiceCollectionExtension
     {
         public static void AddDondeOData
-            (this IServiceCollection services, 
+            (this IServiceCollection services,
             IConfigurationRoot configurationRoot,
             string configurationKey = null)
         {

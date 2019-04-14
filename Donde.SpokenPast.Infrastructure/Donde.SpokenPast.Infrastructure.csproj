@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\UsersRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.0" />

@@ -13,7 +13,7 @@ namespace Donde.SpokenPast.Web.OData
         {
             //this allows json response to be camecase.
             modelBuilder.ModelBuilderFactory = () => new ODataConventionModelBuilder().EnableLowerCamelCase();
-        
+
             builder.Select().Filter().OrderBy().MaxTop(ODataConstants.MaximumTopAllowed).Count();
             builder.MapVersionedODataRoutes("odata", "api/v{apiVersion}", modelBuilder.GetEdmModels());
 
@@ -21,3 +21,4 @@ namespace Donde.SpokenPast.Web.OData
         }
     }
 }
+
