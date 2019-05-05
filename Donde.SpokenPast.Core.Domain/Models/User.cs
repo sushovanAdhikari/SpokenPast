@@ -1,5 +1,6 @@
 ﻿using System;
 using Donde.SpokenPast.Core.Domain.Interfaces;
+using FluentValidation;
 
 namespace Donde.SpokenPast.Core.Domain.Models
 {
@@ -15,5 +16,15 @@ namespace Donde.SpokenPast.Core.Domain.Models
         public DateTime AddedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public DateTime IsActive { get; set; }
+    }
+
+    public class UserValidator : AbstractValidator<User>
+    {
+        public UserValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Phone);
+            RuleFor(x => x.Email).NotEmpty().EmailAddress();
+        }
     }
 }

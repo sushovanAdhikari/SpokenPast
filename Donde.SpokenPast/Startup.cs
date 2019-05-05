@@ -2,6 +2,7 @@
 using Donde.SpokenPast.Core.Repositories.Interfaces.RepositoryInterfaces;
 using Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces;
 using Donde.SpokenPast.Core.Services.Services;
+using Donde.SpokenPast.Infrastructure.Database;
 using Donde.SpokenPast.Infrastructure.Repositories;
 using Donde.SpokenPast.Web.OData;
 using Microsoft.AspNet.OData.Builder;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -65,14 +67,24 @@ namespace Donde.SpokenPast.Web
             services.AddSingleton<IViewComponentActivator>(
                 new SimpleInjectorViewComponentActivator(container));
 
-
             services.EnableSimpleInjectorCrossWiring(container);
             services.UseSimpleInjectorAspNetRequestScoping(container);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, VersionedODataModelBuilder modelBuilder, ILoggerFactory loggerFactory)
         {
+            app.UseCors("CorsPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

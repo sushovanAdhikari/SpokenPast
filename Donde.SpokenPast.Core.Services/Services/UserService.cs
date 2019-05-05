@@ -4,6 +4,7 @@ using Donde.SpokenPast.Core.Domain.Models;
 using Donde.SpokenPast.Core.Repositories.Interfaces.RepositoryInterfaces;
 using Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces;
 using Donde.SpokenPast.Infrastructure.Repositories;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,18 +22,31 @@ namespace Donde.SpokenPast.Core.Services.Services
             _userRepository = userRepository;
         }
 
-        public Task<User> CreateUserAsync(User entity)
+        public async Task<User> CreateUserAsync(User entity)
         {
-            entity.Id = SequentialGuidGenerator.GenerateComb();
-            entity.AddedDate = DateTime.UtcNow;
-            entity.UpdatedDate = DateTime.UtcNow;
-            // validate the user entity. Use fluent validaiton with asp.net core.
-            throw new NotImplementedException();
+            try
+            {
+                if (_userRepository.DoesUserNotExist(entity.Email))
+                {
+                    entity.Id = SequentialGuidGenerator.GenerateComb();
+                    entity.AddedDate = DateTime.Now;
+                    entity.UpdatedDate = DateTime.Now;
+                    entity.IsActive = DateTime.Now;
+                    await _userRepository.CreateUserAsync(entity);
+
+                    return entity;
+                }
+
+                return new User();
+            } catch (Exception ex)
+            {
+                return new User();
+            }
         }
 
         public Task<User> GetUserByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetUserByIdAsync(id);
         }
 
         public IQueryable<User> GetUsers()
@@ -43,6 +57,16 @@ namespace Donde.SpokenPast.Core.Services.Services
         public Task<User> UpdateUserAsync(Guid id, User entity)
         {
             throw new NotImplementedException();
+        }
+
+        public bool DoesUserNotExist(string email)
+        {
+            return _userRepository.DoesUserNotExist(email);
+        }
+
+        public Task<User> AuthenticateUser(String email, String password)
+        {
+            return _userRepository.AuthenticateUser(email, password);
         }
     }
 }

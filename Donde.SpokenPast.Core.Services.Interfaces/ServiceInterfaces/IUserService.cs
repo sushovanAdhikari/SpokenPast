@@ -15,5 +15,7 @@ namespace Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces
         Task<User> CreateUserAsync(User entity);
         Task<User> UpdateUserAsync(Guid id, User entity);
         Task<User> GetUserByIdAsync(Guid id);
+        bool DoesUserNotExist(string email);
+        Task<User> AuthenticateUser(String email, String password);
     }
 }

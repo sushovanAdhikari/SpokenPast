@@ -4,11 +4,13 @@ using Donde.SpokenPast.Core.Domain.Models;
 using Donde.SpokenPast.Core.Service.Interfaces.ServiceInterfaces;
 using Donde.SpokenPast.Infrastructure.Database;
 using Donde.SpokenPast.Web.ViewModels;
+using FluentValidation.Results;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Donde.SpokenPast.Web.Controllers
         private readonly DondeContext _context;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly object odataOptions;
+       // private readonly object odataOptions;
 
         public UsersController(DondeContext context, IUserService userService, IMapper mapper)
         {
@@ -71,7 +73,40 @@ namespace Donde.SpokenPast.Web.Controllers
         public async Task<IActionResult> Post([FromBody]UserViewModel user)
         {
             var userModel = _mapper.Map<User>(user);
-            return Ok(await _userService.CreateUserAsync(userModel));
+            UserValidator validationUser = new UserValidator();
+            ValidationResult results = validationUser.Validate(userModel);
+            String errors = "";
+            if (!results.IsValid)
+            {
+                foreach (var error in results.Errors)
+                {
+                    errors += error.ErrorMessage + "   ";
+                }
+
+                return new JsonResult(new { Errors = errors });
+            }
+            var returnUser = await _userService.CreateUserAsync(userModel);
+            if (returnUser.Email == null) {
+                return new JsonResult(new { Errors = "User with the email has already been registered." });
+            }
+            return Ok(returnUser);
+        }
+
+        [HttpPost]
+        [ODataRoute]
+        public async Task<IActionResult> Authenticate([FromBody]UserViewModel user)
+        {
+            if (_userService.DoesUserNotExist(user.Email))
+            {
+                return new JsonResult(new { Errors = "The email you have entered is not registered.", Success = false });
+            }
+            var getUser = await _userService.AuthenticateUser(user.Email, user.Password);
+            
+            if (getUser.Email == null)
+            {
+                return new JsonResult(new { Errors = "Email and password does not match", Success = false });
+            }
+            return new JsonResult(new { Id = getUser.Id, Success = true});
         }
 
         [HttpPost]
@@ -84,9 +119,13 @@ namespace Donde.SpokenPast.Web.Controllers
             return Ok(await _userService.CreateUserAsync(userModel));
         }
 
-
-
-
+        [HttpGet]
+        [ODataRoute]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            var userToEdit = await _userService.GetUserByIdAsync(id);
+            return new JsonResult(new { User= userToEdit });
+        }
 
         //    var result = await _userService.CreateUserAsync(entity);
 
