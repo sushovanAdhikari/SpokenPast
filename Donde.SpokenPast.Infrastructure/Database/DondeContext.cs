@@ -17,6 +17,7 @@ namespace Donde.SpokenPast.Infrastructure.Database
         }
         public DbSet<User> Users { get; set; }   
         public DbSet<AugmentObject> AugmentObjects { get; set; }
+        public DbSet<Video> Videos { get; set; }
 
         public void Seed(DbContext context)
         {

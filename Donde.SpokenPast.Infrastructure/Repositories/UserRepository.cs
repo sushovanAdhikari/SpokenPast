@@ -27,9 +27,14 @@ namespace Donde.SpokenPast.Infrastructure.Repositories
              return GetAll<User>();
         }
 
-        public Task<User> UpdateUserAsync(Guid id, User entity)
+        public User UpdateUserAsync(Guid id, User entity)
         {
-            throw new NotImplementedException();
+            var userToEdit = dondeContext.Set<User>().Where(x => x.Id == id).FirstOrDefault();
+            userToEdit.Password = entity.Password;
+            userToEdit.Phone = entity.Phone;
+            dondeContext.SaveChangesAsync();
+
+            return entity;
         }
 
         async Task<User> IUserRepository.CreateUserAsync(User entity)

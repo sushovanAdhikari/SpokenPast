@@ -13,7 +13,7 @@ namespace Donde.SpokenPast.Core.Repositories.Interfaces.RepositoryInterfaces
     {
         IQueryable<User> GetUsers();
         Task<User> CreateUserAsync(User entity);
-        Task<User> UpdateUserAsync(Guid id, User entity);
+        User UpdateUserAsync(Guid id, User entity);
         Task<User> GetUserByIdAsync(Guid id);
         bool DoesUserNotExist(String email);
         Task<User> AuthenticateUser(string email, string password);

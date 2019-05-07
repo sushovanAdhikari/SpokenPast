@@ -127,6 +127,15 @@ namespace Donde.SpokenPast.Web.Controllers
             return new JsonResult(new { User= userToEdit });
         }
 
+        [HttpPost]
+        [ODataRoute]
+        public IActionResult UpdateUser([FromBody]User entity)
+        {
+            _userService.UpdateUserAsync(entity.Id, entity);
+
+            return new JsonResult(new { Message = "User has been successfully updated" });
+        }
+
         //    var result = await _userService.CreateUserAsync(entity);
 
         //    //var mappedResult = _mapper.Map<List<UserViewModel>>(result);

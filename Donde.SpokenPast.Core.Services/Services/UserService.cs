@@ -54,9 +54,9 @@ namespace Donde.SpokenPast.Core.Services.Services
             return _userRepository.GetUsers();
         }
 
-        public Task<User> UpdateUserAsync(Guid id, User entity)
+        public User UpdateUserAsync(Guid id, User entity)
         {
-            throw new NotImplementedException();
+            return _userRepository.UpdateUserAsync(id, entity);
         }
 
         public bool DoesUserNotExist(string email)
